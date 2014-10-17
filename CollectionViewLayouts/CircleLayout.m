@@ -24,8 +24,6 @@
    3. The `layoutAttributesForElementsInRect:` method returns the attributes for cells and views that are in the specified rectangle.
  */
 
-#define ITEM_SIZE 20
-
 @implementation CircleLayout {
     CGSize size;
     NSMutableArray *insertPaths, *deletePaths;
@@ -67,7 +65,7 @@
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes
                                                     layoutAttributesForCellWithIndexPath:indexPath];
 
-    attributes.size = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
+    attributes.size = CGSizeMake(self.itemDiameter, self.itemDiameter);
     
     NSUInteger absoluteItemIndex = 0;
     for (NSUInteger section = 0; section < indexPath.section; section++) {
@@ -129,7 +127,7 @@
     if ([insertPaths containsObject:itemIndexPath]) {
         attributes.alpha = 0.0;
         attributes.center = CGPointMake(_center.x, _center.y);
-        attributes.size = CGSizeMake(ITEM_SIZE * 2, ITEM_SIZE * 2);
+        attributes.size = CGSizeMake(self.itemDiameter * 2, self.itemDiameter * 2);
         NSLog(@"Appearing layout for **inserted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
         // all other objects
