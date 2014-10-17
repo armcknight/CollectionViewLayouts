@@ -44,12 +44,6 @@
     for (int section = 0; section < sections; section++) {
         self.cellCount += [self.collectionView numberOfItemsInSection:section];
     }
-
-    // the center point of our viewable area
-    _center = CGPointMake(size.width/2, size.height/2);
-
-    // the circle radius
-    _radius = MIN(size.width, size.height)/2.5;
 }
 
 - (CGSize)collectionViewContentSize
