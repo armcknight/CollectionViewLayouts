@@ -39,9 +39,13 @@
 
     // content area is exactly our viewble area
     size = self.collectionView.frame.size;
-
-    // we only support one section
-    _cellCount = [self.collectionView numberOfItemsInSection:0];
+    
+    // count items in all sections
+    self.cellCount = 0;
+    NSInteger sections = [self.collectionView numberOfSections];
+    for (int section = 0; section < sections; section++) {
+        self.cellCount += [self.collectionView numberOfItemsInSection:section];
+    }
 
     // the center point of our viewable area
     _center = CGPointMake(size.width/2, size.height/2);
@@ -64,21 +68,36 @@
                                                     layoutAttributesForCellWithIndexPath:indexPath];
 
     attributes.size = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
-    attributes.center = CGPointMake(_center.x + _radius *
-                                    cosf(2 * indexPath.item * M_PI / _cellCount),
-                                    _center.y + _radius *
-                                    sinf(2 * indexPath.item * M_PI / _cellCount));
+    
+    NSUInteger absoluteItemIndex = 0;
+    for (NSUInteger section = 0; section < indexPath.section; section++) {
+        absoluteItemIndex += [self.collectionView numberOfItemsInSection:section];
+    }
+    absoluteItemIndex += indexPath.row;
+    
+    attributes.center = CGPointMake(_center.x - _radius *
+                                    cosf(2 * absoluteItemIndex * M_PI / _cellCount),
+                                    _center.y - _radius *
+                                    sinf(2 * absoluteItemIndex * M_PI / _cellCount));
     return attributes;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     NSLog(@"CircleLayout::layoutAttributesForElementsInRect");
+    
+    
     NSMutableArray *attributes = [NSMutableArray array];
-    for (NSInteger i=0; i < self.cellCount; i++) {
-        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-        [attributes addObject:[self layoutAttributesForItemAtIndexPath:indexPath]];
+    
+    NSUInteger sections = [self.collectionView numberOfSections];
+    for (NSUInteger section = 0; section < sections; section++) {
+        NSUInteger items = [self.collectionView numberOfItemsInSection:section];
+        for (NSUInteger item = 0; item < items; item++) {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+            [attributes addObject:[self layoutAttributesForItemAtIndexPath:indexPath]];
+        }
     }
+    
     return attributes;
 }
 
