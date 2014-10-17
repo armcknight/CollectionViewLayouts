@@ -130,10 +130,11 @@
         attributes.alpha = 0.0;
         attributes.center = CGPointMake(_center.x, _center.y);
         attributes.size = CGSizeMake(ITEM_SIZE * 2, ITEM_SIZE * 2);
-        NSLog(@"Appearing layout for **inserted** object [%d, %d] set", itemIndexPath.section, itemIndexPath.row);
+        NSLog(@"Appearing layout for **inserted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
         // all other objects
-        NSLog(@"Appearing layout for other object [%d, %d] set", itemIndexPath.section, itemIndexPath.row);
+      
+        NSLog(@"Appearing layout for other object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     }
     return attributes;
 }
@@ -147,10 +148,10 @@
         attributes.alpha = 0.0;
         attributes.center = CGPointMake(_center.x, _center.y);
         attributes.transform3D = CATransform3DMakeScale(0.1, 0.1, 1.0);
-        NSLog(@"Disappearing layout for **deleted** object [%d, %d] set", itemIndexPath.section, itemIndexPath.row);
+        NSLog(@"Disappearing layout for **deleted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
         // all other objects
-        NSLog(@"Disappearing layout for other object [%d, %d] set", itemIndexPath.section, itemIndexPath.row);
+        NSLog(@"Disappearing layout for other object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     }
 
     return attributes;
