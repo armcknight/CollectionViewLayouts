@@ -68,9 +68,9 @@
     absoluteItemIndex += indexPath.row;
     
     attributes.center = CGPointMake(_center.x - _radius *
-                                    cosf(2 * absoluteItemIndex * M_PI / _cellCount),
+                                    cosf(2 * M_PI * absoluteItemIndex / _cellCount),
                                     _center.y - _radius *
-                                    sinf(2 * absoluteItemIndex * M_PI / _cellCount));
+                                    sinf(2 * M_PI * absoluteItemIndex / _cellCount));
     return attributes;
 }
 
