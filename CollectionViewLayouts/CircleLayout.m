@@ -61,16 +61,10 @@
 
     attributes.size = CGSizeMake(self.itemDiameter, self.itemDiameter);
     
-    NSUInteger absoluteItemIndex = 0;
-    for (NSUInteger section = 0; section < indexPath.section; section++) {
-        absoluteItemIndex += [self.collectionView numberOfItemsInSection:section];
-    }
-    absoluteItemIndex += indexPath.row;
+    CGPoint center;
+    center = [self centerForItemAtIndexPath:indexPath];
     
-    attributes.center = CGPointMake(_center.x - _radius *
-                                    cosf(2 * M_PI * absoluteItemIndex / _cellCount),
-                                    _center.y - _radius *
-                                    sinf(2 * M_PI * absoluteItemIndex / _cellCount));
+    attributes.center = center;
     return attributes;
 }
 
@@ -153,6 +147,65 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
     return YES;
+}
+
+#pragma mark - Setters
+
+- (void)setSectionClusteringFactor:(CGFloat)sectionClusteringFactor
+{
+    if (sectionClusteringFactor > 1.0f) {
+        _sectionClusteringFactor = 1.0f;
+    } else if (sectionClusteringFactor < 0.0f) {
+        _sectionClusteringFactor = 0.0f;
+    } else {
+        _sectionClusteringFactor = sectionClusteringFactor;
+    }
+}
+
+#pragma mark - Private
+
+/**
+ *  Determine the center of an item, which falls on the circle of the overall layout.
+ *  
+ *  Sections' items will be slightly contracted towards their section's center, leaving
+ *  sections appearing clustered. The degree to which they are clustered depends on the
+ *  value of @c self.groupClusteringFactor, which is multiplied by the amount of radians between
+ *  each item on the layout circle if they were spaced evenly, producing the unit amount of radians
+ *  to adjust the item's position on the layout circle for section contraction. This unit
+ *  amount is then multiplied by the index distance of the current item from the center of the
+ *  section (# items / 2--as in x.5 for sections with an odd number of items and x.0 for even).
+ *
+ *  @param indexPath indexPath of the item to place on the circle.
+ *
+ *  @return A CGPoint representing the center of the item.
+ */
+- (CGPoint)centerForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger itemsInThisSection = [self.collectionView numberOfItemsInSection:indexPath.section];
+    
+    CGFloat distanceToCenter;
+    if (itemsInThisSection <= 1) {
+        distanceToCenter = 0.0f;
+    } else if (itemsInThisSection == 2) {
+        distanceToCenter = 0.5f * (indexPath.row == 0 ? 1.0f : -1.0f);
+    } else {
+        distanceToCenter = (itemsInThisSection - 1) / 2.0f - indexPath.row;
+    }
+    
+    NSUInteger absoluteItemIndex = 0;
+    for (NSUInteger section = 0; section < indexPath.section; section++) {
+        absoluteItemIndex += [self.collectionView numberOfItemsInSection:section];
+    }
+    absoluteItemIndex += indexPath.row;
+    
+    CGFloat equallyDividedRadiansPerItem = 2.0f * M_PI / self.cellCount;
+    CGFloat radianAdjustmentPerSectionItem = equallyDividedRadiansPerItem * self.sectionClusteringFactor;
+    CGFloat adjustmentRadians = distanceToCenter * radianAdjustmentPerSectionItem;
+    CGFloat finalRadians = absoluteItemIndex * equallyDividedRadiansPerItem + adjustmentRadians;
+    
+    CGPoint center = CGPointMake(self.center.x - self.radius * cosf(finalRadians),
+                                 self.center.y - self.radius * sinf(finalRadians));
+    return center;
 }
 
 @end
