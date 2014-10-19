@@ -44,7 +44,8 @@
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section;
 
 /**
- *  @return A CGFloat describing how wide an item should be.
+ *  @return A CGFloat describing how wide an item should be. Provided to dynamically
+ *  change cell sizes on a layout invalidation call.
  *
  *  @warning A sufficiently high value may cause items to overlap if @c sectionClusteringFactor
  *  is near 1.0.
