@@ -24,12 +24,6 @@
    3. The `layoutAttributesForElementsInRect:` method returns the attributes for cells and views that are in the specified rectangle.
  */
 
-@interface CircleLayout ()
-
-@property (nonatomic, assign) NSInteger cellCount;
-
-@end
-
 @implementation CircleLayout {
     CGSize size;
     NSMutableArray *insertPaths, *deletePaths;
@@ -43,13 +37,6 @@
 
     // content area is exactly our viewble area
     size = self.collectionView.frame.size;
-    
-    // count items in all sections
-    self.cellCount = 0;
-    NSInteger sections = [self.collectionView numberOfSections];
-    for (int section = 0; section < sections; section++) {
-        self.cellCount += [self.collectionView numberOfItemsInSection:section];
-    }
 }
 
 - (CGSize)collectionViewContentSize

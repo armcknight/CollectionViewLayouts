@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) CGPoint layoutCenter;
 @property (nonatomic, assign) CGFloat layoutRadius;
+@property (nonatomic, assign) NSInteger cellCount;
 
 /**
  *  A CGFloat describing how wide an item should be.
