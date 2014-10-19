@@ -52,7 +52,8 @@
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes
                                                     layoutAttributesForCellWithIndexPath:indexPath];
 
-    attributes.size = CGSizeMake(self.itemDiameter, self.itemDiameter);
+    CGFloat diameter = [self.delegate diameterForItemAtIndexPath:indexPath];
+    attributes.size = CGSizeMake(diameter, diameter);
     
     CGPoint center;
     center = [self centerForItemAtIndexPath:indexPath];
@@ -108,7 +109,8 @@
     if ([insertPaths containsObject:itemIndexPath]) {
         attributes.alpha = 0.0;
         attributes.center = CGPointMake(_layoutCenter.x, _layoutCenter.y);
-        attributes.size = CGSizeMake(self.itemDiameter * 2, self.itemDiameter * 2);
+        CGFloat diameter = [self.delegate diameterForItemAtIndexPath:itemIndexPath];
+        attributes.size = CGSizeMake(diameter * 2, diameter * 2);
         NSLog(@"Appearing layout for **inserted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
         // all other objects
