@@ -24,6 +24,12 @@
    3. The `layoutAttributesForElementsInRect:` method returns the attributes for cells and views that are in the specified rectangle.
  */
 
+@interface CircleLayout ()
+
+@property (nonatomic, assign) NSInteger cellCount;
+
+@end
+
 @implementation CircleLayout {
     CGSize size;
     NSMutableArray *insertPaths, *deletePaths;
