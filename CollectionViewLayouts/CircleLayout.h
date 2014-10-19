@@ -10,8 +10,8 @@
 
 @interface CircleLayout : UICollectionViewLayout
 
-@property (nonatomic, assign) CGPoint center;
-@property (nonatomic, assign) CGFloat radius;
+@property (nonatomic, assign) CGPoint layoutCenter;
+@property (nonatomic, assign) CGFloat layoutRadius;
 
 /**
  *  A CGFloat describing how wide an item should be.

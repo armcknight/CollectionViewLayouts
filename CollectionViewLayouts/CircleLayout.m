@@ -120,7 +120,7 @@
     // begin-transition attributes for inserted objects
     if ([insertPaths containsObject:itemIndexPath]) {
         attributes.alpha = 0.0;
-        attributes.center = CGPointMake(_center.x, _center.y);
+        attributes.center = CGPointMake(_layoutCenter.x, _layoutCenter.y);
         attributes.size = CGSizeMake(self.itemDiameter * 2, self.itemDiameter * 2);
         NSLog(@"Appearing layout for **inserted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
@@ -138,7 +138,7 @@
     // end-transition attributes for deleted objects
     if ([deletePaths containsObject:itemIndexPath]) {
         attributes.alpha = 0.0;
-        attributes.center = CGPointMake(_center.x, _center.y);
+        attributes.center = CGPointMake(_layoutCenter.x, _layoutCenter.y);
         attributes.transform3D = CATransform3DMakeScale(0.1, 0.1, 1.0);
         NSLog(@"Disappearing layout for **deleted** object [%ld, %ld] set", (long)itemIndexPath.section, (long)itemIndexPath.row);
     } else {
@@ -209,8 +209,8 @@
     CGFloat adjustmentRadians = distanceToCenter * radianAdjustmentPerSectionItem;
     CGFloat finalRadians = absoluteItemIndex * equallyDividedRadiansPerItem + adjustmentRadians;
     
-    CGPoint center = CGPointMake(self.center.x - self.radius * cosf(finalRadians),
-                                 self.center.y - self.radius * sinf(finalRadians));
+    CGPoint center = CGPointMake(self.layoutCenter.x - self.layoutRadius * cosf(finalRadians),
+                                 self.layoutCenter.y - self.layoutRadius * sinf(finalRadians));
     return center;
 }
 
