@@ -33,17 +33,6 @@
 @protocol CircleLayoutDelegate <NSObject>
 
 /**
- *  @return The count of items in the given section.
- *
- *  @param section The section whose amount of items is needed.
- *
- *  @warning Do not call -[UICollectionView numberOfItemsInSection:] within the
- *  implementation to this method. This method is provided to avoid a crash when
- *  trying to query the UICollectionView data source during updates.
- */
-- (NSUInteger)numberOfItemsInSection:(NSUInteger)section;
-
-/**
  *  @return A CGFloat describing how wide an item should be. Provided to dynamically
  *  change cell sizes on a layout invalidation call.
  *

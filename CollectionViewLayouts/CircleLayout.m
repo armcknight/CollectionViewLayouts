@@ -176,9 +176,7 @@
  */
 - (CGPoint)centerForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSAssert(self.delegate != nil && [self.delegate respondsToSelector:@selector(numberOfItemsInSection:)], @"CircleLayout must have a delegate implementing numberOfItemsInSection: method of CircleLayoutDelegate protocol.");
-    
-    NSUInteger itemsInThisSection = [self.delegate numberOfItemsInSection:indexPath.section];
+    NSUInteger itemsInThisSection = [self.collectionView numberOfItemsInSection:indexPath.section];
     
     CGFloat distanceToCenter;
     if (itemsInThisSection <= 1) {
@@ -191,7 +189,7 @@
     
     NSUInteger absoluteItemIndex = 0;
     for (NSUInteger section = 0; section < indexPath.section; section++) {
-        absoluteItemIndex += [self.delegate numberOfItemsInSection:section];
+        absoluteItemIndex += [self.collectionView numberOfItemsInSection:section];
     }
     absoluteItemIndex += indexPath.row;
     
