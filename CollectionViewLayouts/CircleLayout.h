@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CircleLayoutDelegate;
+
 @interface CircleLayout : UICollectionViewLayout
 
 @property (nonatomic, assign) CGPoint layoutCenter;
@@ -31,5 +33,13 @@
  *  sufficiently large.
  */
 @property (nonatomic, assign) CGFloat sectionClusteringFactor;
+
+@property (nonatomic, weak) id<CircleLayoutDelegate> delegate;
+
+@end
+
+@protocol CircleLayoutDelegate <NSObject>
+
+- (NSUInteger)numberOfItemsInSection:(NSUInteger)section;
 
 @end
