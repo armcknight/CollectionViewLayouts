@@ -19,7 +19,8 @@
 /**
  *  A CGFloat between 0.0 and 1.0 that affects how much a section's
  *  items will be clustered together. Values outside the range will be clipped to 
- *  the nearest bound.
+ *  the nearest bound. A value of 0.0 results in all cells being displayed
+ *  equidistant on the circle, regardless of section membership.
  *
  *  @warning Values close to 1.0 may cause items to overlap if the value returned
  *  from @c diameterForItemAtIndexPath: is sufficiently large.
